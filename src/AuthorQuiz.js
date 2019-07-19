@@ -1,5 +1,6 @@
 import React from 'react';
 import propTypes from 'prop-types';
+import { Link } from  'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.css';
 
 import './App.css';
@@ -53,9 +54,20 @@ Turn.protoTypes = {
   highlight: propTypes.string.isRequired
 };
 
-function Continue() {
-  return(<div />);
-}
+function Continue({show, onContinue}) {
+  return(
+    <div className="row continue">
+    { show ?
+      <div className="col-11">
+      <button type="button" class="btn btn-primary btn-lg float-right">Continue</button>
+
+      </div>
+      :null }
+      </div>
+    );
+
+    }
+
 
 function Footer() {
   return(<div id="footer" className="row" >
@@ -69,12 +81,13 @@ function Footer() {
 </div>);
 
 }
-function AuthorQuiz({turnData, highlight, onAnswerSelected}) {
+function AuthorQuiz({turnData, highlight, onAnswerSelected, onContinue }) {
   return (
     <div className="container-fluid">
 <Hero />
 <Turn {...turnData} highlight={highlight} onAnswerSelected={onAnswerSelected}/>
-<Continue />
+<Continue show={highlight === 'correct'} onContinue={onContinue}/>
+<p> <Link to= "/add">Add an author</Link></p>
 <Footer />
     </div>
   );
